@@ -117,50 +117,57 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"index.js":[function(require,module,exports) {
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+})({"index1.ts":[function(require,module,exports) {
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (b.hasOwnProperty(p)) d[p] = b[p];
+      }
+    };
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+    return _extendStatics(d, b);
+  };
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+  return function (d, b) {
+    _extendStatics(d, b);
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+    function __() {
+      this.constructor = d;
+    }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
 
 console.log('hello world'); // 继承
 // -------------- 1 -------------
 // 父类 People
 
 var People =
-/*#__PURE__*/
+/** @class */
 function () {
   function People(name, age) {
-    _classCallCheck(this, People);
-
     this.name = name;
     this.age = age;
+    this.widget = 120;
   }
 
-  _createClass(People, [{
-    key: "eat",
-    value: function eat() {
-      console.log("".concat(this.name, " eat something!!!"));
-    }
-  }, {
-    key: "speak",
-    value: function speak() {
-      console.log("".concat(this.name, " speak, ").concat(this.name, " is ").concat(this.age, " years old."));
-    }
-  }]);
+  People.prototype.eat = function () {
+    console.log(this.name + " eat something!!!");
+  };
+
+  People.prototype.speak = function () {
+    console.log(this.name + " speak, " + this.name + " is " + this.age + " years old.");
+  };
+
+  People.prototype.getWidget = function () {
+    console.log("wedget " + this.widget);
+  };
 
   return People;
 }();
@@ -168,28 +175,32 @@ function () {
 var people = new People('xiaotian', 20);
 people.eat();
 people.speak();
+people.getWidget();
 
 var Student =
-/*#__PURE__*/
-function (_People) {
-  _inherits(Student, _People);
+/** @class */
+function (_super) {
+  __extends(Student, _super);
 
   function Student(name, age, number) {
-    var _this;
+    var _this = _super.call(this, name, age) || this;
 
-    _classCallCheck(this, Student);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Student).call(this, name, age));
     _this.number = number;
+    _this.girlfriend = 'xiaoxiao';
     return _this;
   }
 
-  _createClass(Student, [{
-    key: "study",
-    value: function study() {
-      console.log("".concat(this.name, "'s ").concat(this.number, ", study"));
-    }
-  }]);
+  Student.prototype.study = function () {
+    console.log(this.name + "'s " + this.number + ", study");
+  };
+
+  Student.prototype.getWidget = function () {
+    console.log(this.name + "'s wedget " + this.widget);
+  };
+
+  Student.prototype.getGirlFriend = function () {
+    console.log("my girl friend " + this.girlfriend);
+  };
 
   return Student;
 }(People); // 继承父类 People
@@ -201,6 +212,8 @@ console.log('--------------');
 xiaoming.eat();
 xiaoming.speak();
 xiaoming.study();
+xiaoming.getWidget(); // xiaoming.girlfriend // fail
+
 console.log('--------------');
 xiaohong.eat();
 xiaohong.speak();
@@ -233,7 +246,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54583" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54715" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -409,5 +422,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/src.e31bb0bc.js.map
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index1.ts"], null)
+//# sourceMappingURL=/index1.2a04c17e.js.map
