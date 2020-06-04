@@ -125,3 +125,42 @@ console.log('------11-----')
   console.log('------')
   after(func1, func2)()
 }
+
+
+{
+  console.log('------')
+  const before = function (fn, before) {
+    return function() {
+      before.apply(this, arguments)
+      return fn.apply(this, arguments)
+    }
+  }
+
+  const after = function(fn, after) {
+    return function() {
+      const ret = fn.apply(this, arguments)
+      after.apply(this, arguments)
+      return ret
+    }
+  }
+
+
+
+  function handwashing() {
+    console.log('洗手')
+  }
+
+  function drink() {
+    console.log('喝水')
+  }
+
+  function eat() {
+    console.log('吃饭')
+  }
+
+
+  before(eat, handwashing)()
+  console.log('------')
+  after(eat, drink)()
+
+}
