@@ -42,3 +42,36 @@ let proxyPlus = createProxyFactory(plus)
 
 console.log(proxyMult(1,2,3,4))
 console.log(proxyPlus(1,2,3,4))
+
+const sleep = time => new Promise(resolve => setTimeout(resolve, time))
+
+const imgFunc = (function() {
+  let imgNode = document.createElement('img')
+  document.body.appendChild(imgNode)
+
+  return {
+    setSrc(src) {
+      imgNode.src = src
+    }
+  }
+})()
+
+
+const proxyImage = (function() {
+  const img = new Image()
+  img.onload = function() {
+    imgFunc.setSrc(this.src)
+  }
+
+  return {
+    setSrc(src) {
+      imgFunc.setSrc('https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=766379944,3048822499&fm=26&gp=0.jpg')
+      // 模拟加载时间
+      setTimeout(() => {
+        img.src = src
+      }, 2000)
+    }
+  }
+})()
+
+proxyImage.setSrc('http://t8.baidu.com/it/u=1484500186,1503043093&fm=79&app=86&f=JPEG?w=1280&h=853')
