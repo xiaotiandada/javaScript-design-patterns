@@ -55,5 +55,32 @@ const Validator = function() {
 }
 
 Validator.prototype.add = function(dom, rules) {
-  let slef = this
+	let slef = this
+	for(let i = 0, rule; rule = rules[i]; ) {
+		(function(rule) {
+			console.log('rule', rule)
+		})(rule)
+	}
+}
+
+Validator.prototype.start = function() {
+	return '111'
+}
+
+let registerForm = document.getElementById('registerForm')
+
+let validatorFunc = function() {
+	let validator = new Validator()
+	let errorMsg = validator.start()
+	return errorMsg
+}
+
+registerForm.onsubmit = function() {
+	let errorMsg = validatorFunc()
+	if (errorMsg) {
+		console.log(errorMsg)
+	} else {
+		console.log('done')
+	}
+	return false
 }
