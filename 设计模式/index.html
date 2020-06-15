@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .error-msg {
+      color: red;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
   <!-- <button id="login">login</button> -->
@@ -13,7 +19,18 @@
   <!-- <script src="./适配器模式.js"></script> -->
   <!-- <script src="./代理模式.js"></script> -->
   <form id="registerForm">
-    <input type="text">
+    <div>
+      <label for="">用户名</label>
+      <input type="text" name="username">
+    </div>
+    <div>
+      <label for="">密码</label>
+      <input type="password" name="password">
+    </div>
+    <div>
+      <label for="">手机号码</label>
+      <input type="text" name="phoneNumber">
+    </div>
     <button>submit</button>
   </form>
   <script src="./策略模式.js"></script>

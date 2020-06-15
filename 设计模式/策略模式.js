@@ -35,7 +35,7 @@ const strategyForm = {
 		}
 	},
 	// 最小长度
-	minLength (value, errorMsg, length){
+	minLength (value, length, errorMsg){
 		if (value.length < length) {
 			return errorMsg;
 		}
@@ -56,27 +56,75 @@ const Validator = function() {
 
 Validator.prototype.add = function(dom, rules) {
 	let slef = this
-	for(let i = 0, rule; rule = rules[i]; ) {
+	// 添加错误信息提示
+	const addErrorMsg = (msg, dom, errorMsg) => {
+		// 如果有错误信息
+		if (msg) {
+			// 如果已经有了错误提示
+			let errorMsgDom = dom.parentNode.querySelector('.error-msg')
+			if (errorMsgDom) {
+				errorMsgDom.innerHTML = errorMsg
+			} else {
+				// 没有提示创建
+				let errorHtml = document.createElement('span')
+				errorHtml.className = 'error-msg'
+				errorHtml.innerHTML = errorMsg
+				dom.parentNode.appendChild(errorHtml)
+			}
+		} else {
+			// 没有错误提示
+			// 如果有错误提示但是tag还存在则清除
+			let errorMsgDom = dom.parentNode.querySelector('.error-msg')
+			if (errorMsgDom) {
+				errorMsgDom.remove()
+			}
+		}
+	}
+	for(let i = 0, rule; rule = rules[i++]; ) {
 		(function(rule) {
-			console.log('rule', rule)
+			let strategyArr = rule.strategy.split(':')
+			let errorMsg = rule.errorMsg
+
+			slef.cache.push(function() {
+				let strategy = strategyArr.shift() // 取第一个 策略名
+				strategyArr.unshift(dom.value)
+				strategyArr.push(errorMsg)
+				let msg = strategyForm[strategy].apply(dom, strategyArr)
+				addErrorMsg(msg, dom, errorMsg)
+				return msg
+			})
+
 		})(rule)
 	}
 }
 
 Validator.prototype.start = function() {
-	return '111'
+	for (let i = 0, validatorFunc; validatorFunc = this.cache[i++];) {
+		let msg = validatorFunc()
+		if (msg) return msg
+	}
 }
 
 let registerForm = document.getElementById('registerForm')
 
-let validatorFunc = function() {
+let validateFunc = function() {
 	let validator = new Validator()
+	validator.add(registerForm.username, [
+		{ strategy: 'isNotEmpty', errorMsg: '用户名不能为空' },
+		{ strategy: 'minLength:6', errorMsg: '用户名长度不能小于6位' }
+	])
+	validator.add(registerForm.password,[
+		{strategy: 'minLength:6',errorMsg:'密码长度不能小于6位'},
+	]);
+	validator.add(registerForm.phoneNumber,[
+		{strategy: 'mobileFormat',errorMsg:'手机号格式不正确'},
+	]);
 	let errorMsg = validator.start()
 	return errorMsg
 }
 
 registerForm.onsubmit = function() {
-	let errorMsg = validatorFunc()
+	let errorMsg = validateFunc()
 	if (errorMsg) {
 		console.log(errorMsg)
 	} else {
