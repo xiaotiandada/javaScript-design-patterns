@@ -68,7 +68,7 @@ let mediator = (function() {
                 return
             }
 
-            if (((number - 0) | 0 !== number - 0)) {
+            if (((number - 0) | 0 ) !== number - 0) {
                 nextBtn.disabled = true
                 nextBtn.innerHTML = '请输入正确的购买数量'
                 return
