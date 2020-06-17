@@ -12,12 +12,34 @@
   </style>
 </head>
 <body>
-  <!-- <button id="login">login</button> -->
-  <!-- <button id="btn">login</button> -->
-  <!-- <script src="./工厂模式.js"></script> -->
-  <!-- <script src="./单例模式.js"></script> -->
-  <!-- <script src="./适配器模式.js"></script> -->
-  <!-- <script src="./代理模式.js"></script> -->
+  <form action="#" id="selectPhone">
+    <div>
+      <label for="">选择手机颜色</label>
+      <select name="" id="colorSelect">
+        <option value="">请选择</option>
+        <option value="red">红色</option>
+        <option value="blue">蓝色</option>
+      </select>
+    </div>
+    <div>
+      <label for="">选择内存</label>
+      <select name="" id="memorySelect">
+        <option value="">请选择</option>
+        <option value="16G">16G</option>
+        <option value="32G">32G</option>
+      </select>
+    </div>
+    <div>
+      <label for="">输入购买数量</label>
+      <input type="number" min="0" id="numberInput">
+    </div>
+    <div>
+      您选择了颜色: <div id="colorInfo"></div><br/>
+      您选择了内存: <div id="memoryInfo"></div><br/>
+      您输入了数量: <div id="numberInfo"></div><br/>
+      <button id="nextBtn" disabled="true">请选择手机颜色和购买数量</button>
+    </div>
+  </form>
   <form id="registerForm">
     <div>
       <label for="">用户名</label>
@@ -33,6 +55,15 @@
     </div>
     <button>submit</button>
   </form>
+  <!-- <button id="login">login</button> -->
+  <!-- <button id="btn">login</button> -->
+  <!-- <script src="./工厂模式.js"></script> -->
+  <!-- <script src="./单例模式.js"></script> -->
+  <!-- <script src="./适配器模式.js"></script> -->
+  <!-- <script src="./代理模式.js"></script> -->
+  <!-- <script src="./代理模式.js"></script> -->
+
   <script src="./策略模式.js"></script>
+  <script src="./中介者模式.js"></script>
 </body>
 </html>
